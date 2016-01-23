@@ -13,12 +13,14 @@
     var audio_container = $("#dates");
     var audio_list_expanded = false;
     var menu_expanded = false;
+    var last_log_played;
 
     var build_click_handler = function(datestamp) {
         return function(event) {
             if (audio_list_expanded) {
                 collapse_audio_list(event.target, datestamp);
                 play_log(datestamp);
+                last_log_played = [event.target, datestamp];
             } else {
                 expand_audio_list();
                 collapse_menu();
@@ -27,6 +29,9 @@
     };
 
     var collapse_audio_list = function(elem, datestamp) {
+        if (!audio_list_expanded) {
+            return;
+        }
         audio_list_expanded = false;
         var idx = get_log_by_date(datestamp)[0];
         var height = typeof elem === "undefined" ? 0 : $(elem).height();
@@ -105,7 +110,7 @@
     var expand_menu = function() {
         menu_expanded = true;
         $("#menuwrapper").animate({height: "300px"}, 500);
-        collapse_audio_list();
+        collapse_audio_list(last_log_played[0], last_log_played[1]);
     };
 
     var collapse_menu = function() {
