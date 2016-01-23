@@ -87,11 +87,9 @@ body{
     padding-right: 15px;
 }
 
-#dates ul {
-    list-style: none;
-}
-
-#dates ul li {
+#dates .date {
+    display: block;
+    cursor: pointer;
 }
 
 .arrow {
