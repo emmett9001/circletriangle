@@ -17,7 +17,7 @@
         return function(event) {
             if (audio_list_expanded) {
                 collapse_audio_list(event.target, datestamp);
-                //play_log(datestamp);
+                play_log(datestamp);
             } else {
                 expand_audio_list();
             }
@@ -30,11 +30,14 @@
         var relativeTop = $(elem).height() * idx;
         audio_container.animate({height: "50px"}, 500);
         audio_list.animate({scrollTop: relativeTop}, 500);
+        $("#rightwrapper .arrow").css("visibility", "hidden");
+        $("#rightwrapper .arrow.flip").css("visibility", "hidden");
     };
 
     var expand_audio_list = function() {
         audio_list_expanded = true;
-        audio_container.css("height", "200px");
+        audio_container.animate({height: "200px"}, 500);
+        set_arrow_visibility();
     };
 
     var populate_logs = function (){
@@ -67,14 +70,11 @@
             audio_objects[key].pause();
         }
         var audio = new Audio('media/audio/' + filename);
-        audio.play();
+        //audio.play();
         audio_objects[datestamp] = audio;
     };
 
-    audio_list.scroll(function() {
-        if (!audio_list_expanded) {
-            return;
-        }
+    var set_arrow_visibility = function() {
         var scrollAmount = audio_list.scrollTop() + audio_list.height();
         if(scrollAmount == audio_list[0].scrollHeight) {
             $("#rightwrapper .arrow").css("visibility", "hidden");
@@ -86,8 +86,15 @@
             $("#rightwrapper .arrow").css("visibility", "visible");
             $("#rightwrapper .arrow.flip").css("visibility", "visible");
         }
+    };
+
+    audio_list.scroll(function() {
+        if (!audio_list_expanded) {
+            return;
+        }
+        set_arrow_visibility();
     });
 
     populate_logs();
-    //play_log();
+    play_log();
 })();
