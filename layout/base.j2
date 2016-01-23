@@ -52,6 +52,7 @@
 <body id="{{ resource.meta.id if resource.meta.id else resource.slug }}">
     {% block content %}
         <div id="container">
+            <img id="pause" src="{{ media_url('images/MUTE_SYMBOL.png') }}" />
             <div id="menuswrapper">
                 <div id="dateslabel">
                     Date

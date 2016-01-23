@@ -14,13 +14,14 @@
     var audio_list_expanded = false;
     var menu_expanded = false;
     var last_log_played;
+    var audio_playing;
 
     var build_click_handler = function(datestamp) {
         return function(event) {
             if (audio_list_expanded) {
                 collapse_audio_list(event.target, datestamp);
-                play_log(datestamp);
-                last_log_played = [event.target, datestamp];
+                var audio = play_log(datestamp);
+                last_log_played = [event.target, datestamp, audio];
             } else {
                 expand_audio_list();
                 collapse_menu();
@@ -80,8 +81,11 @@
             audio_objects[key].pause();
         }
         var audio = new Audio('media/audio/' + filename);
-        //audio.play();
+        audio.play();
         audio_objects[datestamp] = audio;
+        audio_playing = true;
+        last_log_played = [undefined, datestamp, audio];
+        return audio;
     };
 
     var set_arrow_visibility = function() {
@@ -123,6 +127,15 @@
             return;
         }
         set_arrow_visibility();
+    });
+
+    $("#pause").click(function() {
+        if (audio_playing) {
+            last_log_played[2].pause();
+        } else {
+            last_log_played[2].play();
+        }
+        audio_playing = !audio_playing;
     });
 
     $("#logo").click(function() {

@@ -104,6 +104,11 @@ body{
     cursor: pointer;
 }
 
+#pause {
+    margin: 10px 0 0 10px;
+    cursor: pointer;
+}
+
 #menuwrapper {
     width: 240px;
     height: 0px;
