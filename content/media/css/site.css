@@ -56,21 +56,25 @@ body{
     float: right;
     margin: 50px 50px 0 0;
     text-align: right;
-    width: 300px;
+    width: 350px;
+    color: #ffbd4f;
+    text-transform: uppercase;
+    font-size: 34pt;
 }
 
 #menuswrapper #dateslabel {
-    float: left;
+    display: inline-block;
+    margin: 75px 0 0 0;
+    font-size: 25pt;
 }
 
 #rightwrapper {
     float: right;
     width: 220px;
+    display: inline-block;
 }
 
 #dates {
-    color: #ffbd4f;
-    font-size: 34pt;
     margin: 0 0 0 0;
     height: 200px;
     overflow: hidden;
@@ -93,7 +97,7 @@ body{
 .arrow {
     width: 100%;
     text-align: center;
-    margin: 20px 0 10px 0;
+    margin: 5px 0 10px 0;
 }
 
 .arrow.flip {
