@@ -32,11 +32,13 @@
         audio_list.animate({scrollTop: relativeTop}, 500);
         $("#rightwrapper .arrow").css("visibility", "hidden");
         $("#rightwrapper .arrow.flip").css("visibility", "hidden");
+        $("#dateslabel").animate({opacity: 0}, 500);
     };
 
     var expand_audio_list = function() {
         audio_list_expanded = true;
         audio_container.animate({height: "200px"}, 500);
+        $("#dateslabel").animate({opacity: 1}, 500);
         set_arrow_visibility();
     };
 
@@ -88,6 +90,15 @@
         }
     };
 
+    var set_background = function() {
+        var hour = new Date().getHours();
+        if (hour > 18) {
+            $("body").css("background-image", "url('media/images/LONDON_OCONNOR_2016_SITE_NIGHT.jpg')");
+        } else {
+            $("body").css("background-image", "url('media/images/LONDON_OCONNOR_2016_SITE_DAY_GRADIENT.jpg')");
+        }
+    };
+
     audio_list.scroll(function() {
         if (!audio_list_expanded) {
             return;
@@ -95,6 +106,9 @@
         set_arrow_visibility();
     });
 
-    populate_logs();
-    play_log();
+    $(document).ready(function() {
+        set_background();
+        populate_logs();
+        play_log();
+    });
 })();
