@@ -1,0 +1,108 @@
+@font-face {
+    font-family: gillsans;
+    src: url({{ media_url('fonts/ufonts.com_gillsans-light.ttf') }});
+}
+
+* {
+    vertical-align: baseline;
+    font-weight: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    text-decoration:inherit;
+    font-size: 100%;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,div {
+    display:block;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+:focus {
+    outline: 0;
+}
+
+::-moz-focus-inner {
+    border: 0;
+}
+
+a {
+    color: #37e;
+    text-decoration: underline;
+    text-shadow: 0px 2px 0px #fff;
+}
+
+a:hover{
+    color: #222;
+}
+
+body{
+    font-family: gillsans, Helvetica, Arial, sans-serif;
+    background-image: url({{ media_url('images/LONDON_OCONNOR_2016_SITE_DAY_GRADIENT.jpg') }});
+    background-attachment: fixed;
+    background-position: center top;
+    background-size: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#menuswrapper {
+    float: right;
+    margin: 50px 50px 0 0;
+    text-align: right;
+    width: 300px;
+}
+
+#menuswrapper #dateslabel {
+    float: left;
+}
+
+#rightwrapper {
+    float: right;
+    width: 220px;
+}
+
+#dates {
+    color: #ffbd4f;
+    font-size: 34pt;
+    margin: 0 0 0 0;
+    height: 200px;
+    overflow: hidden;
+}
+
+#dates #inner {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-right: 15px;
+}
+
+#dates ul {
+    list-style: none;
+}
+
+#dates ul li {
+}
+
+.arrow {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0 10px 0;
+}
+
+.arrow.flip {
+    -ms-transform: rotate(180deg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+}
+
+
+h1 a, h2 a, h3 a{
+    text-decoration: none;
+}
