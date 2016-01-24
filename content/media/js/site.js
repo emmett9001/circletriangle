@@ -180,7 +180,7 @@
             audio_objects[key].pause();
         }
         var audio = new Audio('media/audio/' + filename);
-        audio.play();
+        //audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
         last_log_played = [undefined, datestamp, audio];
@@ -244,6 +244,12 @@
     });
 
     $("#logo").mouseover(function() {
+        if (!menu_expanded) {
+            expand_menu();
+        }
+    });
+
+    $("#menuouter").mouseenter(function() {
         if (!menu_expanded) {
             expand_menu();
         }
