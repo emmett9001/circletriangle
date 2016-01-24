@@ -157,6 +157,13 @@ a.menuitem {
     display: none;
 }
 
+#utilities {
+    width: 500px;
+    margin: 0 auto;
+    opacity: 0;
+    display: none;
+}
+
 h1 a, h2 a, h3 a{
     text-decoration: none;
 }
