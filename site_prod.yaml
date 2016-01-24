@@ -1,0 +1,2 @@
+extends: site.yaml
+media_url: http://londonoconnor.com/beta/deploy/media
