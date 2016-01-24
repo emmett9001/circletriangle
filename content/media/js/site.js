@@ -16,7 +16,8 @@
     var last_log_played;
     var audio_playing;
     var current_page;
-    var ANIMATION_TIMEOUT = 500;
+    var ANIMATION_TIMEOUT = 500,
+        MENU_ITEM_HIDDEN_OPACITY = 0;
 
     var build_log_click_handler = function(datestamp) {
         return function(event) {
@@ -83,7 +84,7 @@
             audio_objects[key].pause();
         }
         var audio = new Audio('media/audio/' + filename);
-        audio.play();
+        //audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
         last_log_played = [undefined, datestamp, audio];
@@ -107,7 +108,7 @@
     var set_background = function() {
         var hour = new Date().getHours();
         if (hour > 18) {
-            $("body").css("background-image", "url('media/images/LONDON_OCONNOR_2016_SITE_NIGHT.jpg')");
+            $("body").css("background-image", "url('media/images/LONDON_OCONNOR_2016_SITE_NIGHT.png')");
         } else {
             $("body").css("background-image", "url('media/images/LONDON_OCONNOR_2016_SITE_DAY_GRADIENT.jpg')");
         }
@@ -146,6 +147,12 @@
         audio_playing = !audio_playing;
     });
 
+    $("#logo").mouseover(function() {
+        if (!menu_expanded) {
+            expand_menu();
+        }
+    });
+
     $("#logo").click(function() {
         if (menu_expanded) {
             collapse_menu();
@@ -169,11 +176,14 @@
         for (var i = 0; i < pages.length; i++) {
             if (pages[i] !== pagename) {
                 $("#" + pages[i]).animate({opacity: 0}, ANIMATION_TIMEOUT, hide_page($("#" + pages[i])));
-                $(".menuitem." + pages[i]).animate({opacity: '.4'}, ANIMATION_TIMEOUT);
+                $(".menuitem." + pages[i]).animate(
+                    {opacity: MENU_ITEM_HIDDEN_OPACITY}, ANIMATION_TIMEOUT);
             }
         }
-        $(".menuitem.instagram").animate({opacity: '.4'}, ANIMATION_TIMEOUT);
-        $(".menuitem.twitter").animate({opacity: '.4'}, ANIMATION_TIMEOUT);
+        $(".menuitem.instagram").animate({opacity: MENU_ITEM_HIDDEN_OPACITY},
+            ANIMATION_TIMEOUT);
+        $(".menuitem.twitter").animate({opacity: MENU_ITEM_HIDDEN_OPACITY},
+            ANIMATION_TIMEOUT);
     };
 
     var build_page_click_handler = function(pagename) {
@@ -185,6 +195,7 @@
                 $(".menuitem." + current_page).animate({opacity: '1'}, ANIMATION_TIMEOUT);
             };
             hide_pages(current_page, show);
+            menu_expanded = false;
         };
     };
 
