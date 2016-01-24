@@ -16,6 +16,7 @@
     var last_log_played;
     var audio_playing;
     var current_page;
+    var ANIMATION_TIMEOUT = 500;
 
     var build_log_click_handler = function(datestamp) {
         return function(event) {
@@ -38,17 +39,17 @@
         var idx = get_log_by_date(datestamp)[0];
         var height = typeof elem === "undefined" ? 0 : $(elem).height();
         var relativeTop = $(elem).height() * idx;
-        audio_container.animate({height: "50px"}, 500);
-        audio_list.animate({scrollTop: relativeTop}, 500);
+        audio_container.animate({height: "50px"}, ANIMATION_TIMEOUT);
+        audio_list.animate({scrollTop: relativeTop}, ANIMATION_TIMEOUT);
         $("#logwrapper .arrow").css("visibility", "hidden");
         $("#logwrapper .arrow.flip").css("visibility", "hidden");
-        $("#dateslabel").animate({opacity: 0}, 500);
+        $("#dateslabel").animate({opacity: 0}, ANIMATION_TIMEOUT);
     };
 
     var expand_audio_list = function() {
         audio_list_expanded = true;
-        audio_container.animate({height: "200px"}, 500);
-        $("#dateslabel").animate({opacity: 1}, 500);
+        audio_container.animate({height: "200px"}, ANIMATION_TIMEOUT);
+        $("#dateslabel").animate({opacity: 1}, ANIMATION_TIMEOUT);
         set_arrow_visibility();
     };
 
@@ -114,13 +115,18 @@
 
     var expand_menu = function() {
         menu_expanded = true;
-        $("#menuwrapper").animate({height: "300px"}, 500);
+        $("#menuwrapper").animate({height: "300px"}, ANIMATION_TIMEOUT);
         collapse_audio_list(last_log_played[0], last_log_played[1]);
+        for (var i = 0; i < pages.length; i++) {
+            $(".menuitem." + pages[i]).animate({opacity: '1'}, ANIMATION_TIMEOUT);
+        }
+        $(".menuitem.instagram").animate({opacity: '1'}, ANIMATION_TIMEOUT);
+        $(".menuitem.twitter").animate({opacity: '1'}, ANIMATION_TIMEOUT);
     };
 
     var collapse_menu = function() {
         menu_expanded = false;
-        $("#menuwrapper").animate({height: "0px"}, 500);
+        $("#menuwrapper").animate({height: "0px"}, ANIMATION_TIMEOUT);
     };
 
     audio_list.scroll(function() {
@@ -146,7 +152,7 @@
             expand_menu();
         }
         if (typeof current_page !== "undefined") {
-            $(current_page).animate({opacity: 0}, 500);
+            $(current_page).animate({opacity: 0}, ANIMATION_TIMEOUT);
         }
     });
 
@@ -161,9 +167,12 @@
         };
         for (var i = 0; i < pages.length; i++) {
             if (pages[i] !== pagename) {
-                $("#" + pages[i]).animate({opacity: 0}, 500, hide_page($("#" + pages[i])));
+                $("#" + pages[i]).animate({opacity: 0}, ANIMATION_TIMEOUT, hide_page($("#" + pages[i])));
+                $(".menuitem." + pages[i]).animate({opacity: '.4'}, ANIMATION_TIMEOUT);
             }
         }
+        $(".menuitem.instagram").animate({opacity: '.4'}, ANIMATION_TIMEOUT);
+        $(".menuitem.twitter").animate({opacity: '.4'}, ANIMATION_TIMEOUT);
     };
 
     var build_page_click_handler = function(pagename) {
@@ -171,7 +180,8 @@
             current_page = pagename;
             var show = function() {
                 $("#" + current_page).show();
-                $("#" + current_page).animate({opacity: 1}, 500);
+                $("#" + current_page).animate({opacity: 1}, ANIMATION_TIMEOUT);
+                $(".menuitem." + current_page).animate({opacity: '1'}, ANIMATION_TIMEOUT);
             };
             hide_pages(current_page, show);
         };
