@@ -117,11 +117,11 @@
             }
         } else {
             var src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][0];
-            var utility = $('<img src="' + src +'">');
+            var utility = $('<img src="' + src +'" class="left">');
             utility.width(UTILITY_WIDTH).load(add_image(phoneslot, index, 0));
             if (phone_backgrounds[i].length > 1) {
                 src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][1];
-                var utility2 = $('<img src="' + src +'">');
+                var utility2 = $('<img src="' + src +'" class="right" >');
                 utility2.width(UTILITY_WIDTH).load(add_image(phoneslot, index, 1));
                 current_utilities = [index, utility, utility2];
             } else {
@@ -133,6 +133,7 @@
             $("#utilities .arrow.flip").css("visibility", "hidden");
         } else if (index === phone_backgrounds.length - 1) {
             $("#utilities .arrow").css("visibility", "hidden");
+            $("#utilities .arrow.flip").css("visibility", "visible");
         } else {
             $("#utilities .arrow.flip").css("visibility", "visible");
             $("#utilities .arrow").css("visibility", "visible");

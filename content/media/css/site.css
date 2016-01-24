@@ -174,7 +174,10 @@ a.menuitem {
 
 #utilities #imgwrapper .phonepair img {
     float: left;
-    margin: 0 30px 0 0;
+}
+
+#utilities #imgwrapper .phonepair img.right {
+    float: right;
 }
 
 h1 a, h2 a, h3 a{
