@@ -48,7 +48,7 @@ body{
 
 #menuswrapper {
     float: right;
-    margin: 50px 50px 0 0;
+    margin: 0 50px 0 0;
     text-align: right;
     width: 350px;
     color: #ffbd4f;
@@ -58,7 +58,7 @@ body{
 
 #menuswrapper #dateslabel {
     display: inline-block;
-    margin: 75px 0 0 0;
+    margin: 38px 10px 0 0;
     font-size: 25pt;
     opacity: 0;
 }
@@ -67,6 +67,7 @@ body{
     float: right;
     width: 220px;
     display: inline-block;
+    margin: 0 0 20px 0;
 }
 
 #dates {
@@ -89,15 +90,22 @@ body{
 
 .arrow {
     width: 100%;
+    height: 15px;
     text-align: center;
     margin: 5px 0 10px 0;
     visibility: hidden;
 }
 
-.arrow.flip {
+.arrow img {
+    -ms-transform: translate(0, -17px);
+    -webkit-transform: translate(0, -17px);
+    transform: translate(0, -17px);
+}
+
+.arrow.flip img {
     -ms-transform: rotate(180deg); /* IE 9 */
     -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-    transform: rotate(180deg);
+    transform: translate(0, -17px) rotate(180deg);
 }
 
 #logo {
