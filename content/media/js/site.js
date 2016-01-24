@@ -127,6 +127,7 @@
     var collapse_menu = function() {
         menu_expanded = false;
         $("#menuwrapper").animate({height: "0px"}, ANIMATION_TIMEOUT);
+        hide_pages(undefined, function(){});
     };
 
     audio_list.scroll(function() {
