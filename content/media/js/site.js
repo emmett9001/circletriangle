@@ -8,6 +8,28 @@
         ["10/26/2015", "TEST_10_26_15.mp3"],
         ["8/5/2015", "TEST_8_5_15.mp3"]
     ];
+    var phone_backgrounds = [
+        ["0A_LOCK_REF.png", "0B_LOCK_REF.png"],
+        ["1A_LOCK.png", "1B_HOME.png"],
+        ["2A_LOCK.png", "2B_HOME.png"],
+        ["3A_LOCK.png", "3B_HOME.png"],
+        ["4A_LOCK.png", "4B_HOME.png"],
+        ["5A_LOCK.png", "5B_HOME.png"],
+        ["6A_LOCK.png", "6B_HOME.png"],
+        ["7A_LOCK.png", "7B_HOME.png"],
+        ["8A_LOCK.png", "8B_HOME.png"],
+        ["9A_LOCK.png", "9B_HOME.png"],
+        ["0A_LOCK_IPHONE_5.png"],
+        ["1A_LOCK_IPHONE_5.png", "1B_HOME_IPHONE_5.png"],
+        ["2A_LOCK_IPHONE_5.png", "2B_HOME_IPHONE_5.png"],
+        ["3A_LOCK_IPHONE_5.png", "3B_HOME_IPHONE_5.png"],
+        ["4A_LOCK_IPHONE_5.png", "4B_HOME_IPHONE_5.png"],
+        ["5A_LOCK_IPHONE_5.png", "5B_HOME_IPHONE_5.png"],
+        ["6A_LOCK_IPHONE_5.png", "6B_HOME_IPHONE_5.png"],
+        ["7A_LOCK_IPHONE_5.png", "7B_HOME_IPHONE_5.png"],
+        ["8A_LOCK_IPHONE_5.png", "8B_HOME_IPHONE_5.png"],
+        ["9A_LOCK_IPHONE_5.png", "9B_HOME_IPHONE_5.png"]
+    ];
     var audio_objects = {};
     var audio_list = $("#dates #inner");
     var audio_container = $("#dates");
@@ -16,8 +38,12 @@
     var last_log_played;
     var audio_playing;
     var current_page;
+    var current_utilities;
+    var utility_slot;
+    var loaded_utilities = {};
     var ANIMATION_TIMEOUT = 500,
-        MENU_ITEM_HIDDEN_OPACITY = 0;
+        MENU_ITEM_HIDDEN_OPACITY = 0,
+        UTILITY_WIDTH = "230px";
 
     var build_log_click_handler = function(datestamp) {
         return function(event) {
@@ -63,6 +89,75 @@
             $(elem).click(build_log_click_handler(audio_logs[i][0]));
         }
     };
+
+    var utilities_list = $("#utilities #imgwrapper");
+    var add_image = function(container, idx, pos) {
+        return function(e){
+            $(container).append(e.target);
+            if (typeof loaded_utilities[idx] === "undefined") {
+                loaded_utilities[idx] = {};
+            }
+            loaded_utilities[idx][pos] = e.target;
+        };
+    };
+
+    var load_utility = function(index) {
+        if (typeof current_utilities !== "undefined") {
+            $(current_utilities[1]).css("display", "none");
+            $(current_utilities[2]).css("display", "none");
+        }
+        if (typeof loaded_utilities[index] !== "undefined") {
+            $(loaded_utilities[index][0]).css("display", "inline");
+            if (typeof loaded_utilities[index][1] !== "undefined") {
+                $(loaded_utilities[index][1]).css("display", "inline");
+                current_utilities = [index, loaded_utilities[index][0],
+                                     loaded_utilities[index][1]];
+            } else {
+                current_utilities = [index, loaded_utilities[index][0], undefined];
+            }
+        } else {
+            var src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][0];
+            var utility = $('<img src="' + src +'">');
+            utility.width(UTILITY_WIDTH).load(add_image(phoneslot, index, 0));
+            if (phone_backgrounds[i].length > 1) {
+                src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][1];
+                var utility2 = $('<img src="' + src +'">');
+                utility2.width(UTILITY_WIDTH).load(add_image(phoneslot, index, 1));
+                current_utilities = [index, utility, utility2];
+            } else {
+                current_utilities = [index, utility, undefined];
+            }
+        }
+        $("#utilities .arrow").css("visibility", "visible");
+        if (index === 0) {
+            $("#utilities .arrow.flip").css("visibility", "hidden");
+        } else if (index === phone_backgrounds.length - 1) {
+            $("#utilities .arrow").css("visibility", "hidden");
+        } else {
+            $("#utilities .arrow.flip").css("visibility", "visible");
+            $("#utilities .arrow").css("visibility", "visible");
+        }
+    };
+
+    var populate_utilities = function() {
+        phoneslot = document.createElement("div");
+        phoneslot.className = "phonepair";
+        load_utility(0);
+        utilities_list.append(phoneslot);
+    };
+
+    $("#utilities .arrow").click(function() {
+        if (!$(this).is(':visible')) {
+            return;
+        }
+        if ($(this).hasClass("flip")) {
+            load_utility(
+                Math.max(current_utilities[0] - 1, 0));
+        } else {
+            load_utility(
+                Math.min(current_utilities[0] + 1, phone_backgrounds.length - 1));
+        }
+    });
 
     var get_log_by_date = function(datestamp) {
         for (var i = 0; i < audio_logs.length; i++) {
@@ -206,6 +301,7 @@
     $(document).ready(function() {
         set_background();
         populate_logs();
+        populate_utilities();
         play_log();
     });
 })();
