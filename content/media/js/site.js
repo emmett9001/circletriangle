@@ -15,8 +15,9 @@
     var menu_expanded = false;
     var last_log_played;
     var audio_playing;
+    var current_page;
 
-    var build_click_handler = function(datestamp) {
+    var build_log_click_handler = function(datestamp) {
         return function(event) {
             if (audio_list_expanded) {
                 collapse_audio_list(event.target, datestamp);
@@ -57,7 +58,7 @@
             elem.className = "date";
             elem.innerHTML = audio_logs[i][0];
             audio_list.append(elem);
-            $(elem).click(build_click_handler(audio_logs[i][0]));
+            $(elem).click(build_log_click_handler(audio_logs[i][0]));
         }
     };
 
@@ -144,7 +145,41 @@
         } else {
             expand_menu();
         }
+        if (typeof current_page !== "undefined") {
+            $(current_page).animate({opacity: 0}, 500);
+        }
     });
+
+    var pages = ["album", "soundcloud", "utilities"];
+
+    var hide_pages = function(pagename, callback) {
+        var hide_page = function(elem) {
+            return function() {
+                elem.hide();
+                callback();
+            };
+        };
+        for (var i = 0; i < pages.length; i++) {
+            if (pages[i] !== pagename) {
+                $("#" + pages[i]).animate({opacity: 0}, 500, hide_page($("#" + pages[i])));
+            }
+        }
+    };
+
+    var build_page_click_handler = function(pagename) {
+        return function() {
+            current_page = pagename;
+            var show = function() {
+                $("#" + current_page).show();
+                $("#" + current_page).animate({opacity: 1}, 500);
+            };
+            hide_pages(current_page, show);
+        };
+    };
+
+    for (var i = 0; i < pages.length; i++) {
+        $(".menuitem." + pages[i]).click(build_page_click_handler(pages[i]));
+    }
 
     $(document).ready(function() {
         set_background();
