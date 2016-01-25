@@ -105,10 +105,29 @@
         };
     };
 
+    var build_reset_utility_animation_callback = function(elem) {
+        return function() {
+            $(this).css("display", "none");
+            $(this).css("opacity", 1);
+            $(this).css("top", 0);
+        };
+    };
+
     var show_utility = function(index) {
+        var next_start_top = "900px", cur_target_top = "-900px";
         if (typeof current_utilities !== "undefined") {
-            $(current_utilities[1]).css("display", "none");
-            $(current_utilities[2]).css("display", "none");
+            if (current_utilities[0] > index) {
+                next_start_top = "-900px";
+                cur_target_top = "900px";
+            }
+            for (var i = 1; i <= 2; i++) {
+                if (typeof current_utilities[i] !== "undefined") {
+                    $(current_utilities[i]).animate({top: cur_target_top, "opacity": 0},
+                        ANIMATION_TIMEOUT,
+                        build_reset_utility_animation_callback(current_utilities[i]));
+                    $(current_utilities[i]).animate({"opacity": 0}, 100);
+                }
+            }
         }
         if (typeof loaded_utilities[index] !== "undefined") {
             $(loaded_utilities[index][0]).css("display", "inline");
@@ -118,6 +137,14 @@
                                      loaded_utilities[index][1]];
             } else {
                 current_utilities = [index, loaded_utilities[index][0], undefined];
+            }
+            for (var k = 1; k <= 2; k++) {
+                if (typeof current_utilities[k] !== "undefined") {
+                    $(current_utilities[k]).css("top", next_start_top);
+                    $(current_utilities[k]).css("opacity", 0);
+                    $(current_utilities[k]).animate({top: 0, opacity: 1},
+                        ANIMATION_TIMEOUT);
+                }
             }
         }
         $("#utilities .arrow").css("visibility", "visible");
@@ -139,11 +166,11 @@
         }
         var src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][0];
         var utility = $('<img src="' + src +'" class="left">');
-        utility.width(UTILITY_WIDTH).load(add_image(phoneslot, index, 0));
+        utility.load(add_image(phoneslot, index, 0));
         if (phone_backgrounds[index].length > 1) {
             src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][1];
             var utility2 = $('<img src="' + src +'" class="right" >');
-            utility2.width(UTILITY_WIDTH).load(add_image(phoneslot, index, 1, callback));
+            utility2.load(add_image(phoneslot, index, 1, callback));
         }
     };
 

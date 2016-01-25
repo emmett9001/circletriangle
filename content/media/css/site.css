@@ -167,6 +167,8 @@ a.menuitem {
     margin: 0 auto;
     opacity: 0;
     display: none;
+    overflow: hidden;
+    padding: 10px 0 0 0;
 }
 
 #utilities .arrow {
@@ -177,12 +179,22 @@ a.menuitem {
     height: 450px;
 }
 
+#utilities #imgwrapper .phonepair {
+    height: 450px;
+    position: relative;
+}
+
 #utilities #imgwrapper .phonepair img {
-    float: left;
+    width: 230px;
+    position: absolute;
+}
+
+#utilities #imgwrapper .phonepair img.left {
+    left: 0;
 }
 
 #utilities #imgwrapper .phonepair img.right {
-    float: right;
+    right: 0;
 }
 
 h1 a, h2 a, h3 a{
