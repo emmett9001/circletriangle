@@ -108,6 +108,18 @@ body{
     transform: translate(0, -30px) rotate(180deg);
 }
 
+#utilities .arrow.flip img {
+    -ms-transform: translate(0, -1px) rotate(180deg); /* IE 9 */
+    -webkit-transform: translate(0, -1px) rotate(180deg); /* Chrome, Safari, Opera */
+    transform: translate(0, -1px) rotate(180deg);
+}
+
+#utilities .arrow img {
+    -ms-transform: translate(0, 1px);
+    -webkit-transform: translate(0, 1px);
+    transform: translate(0, 1px);
+}
+
 #logo {
     cursor: pointer;
     width: 207px;
@@ -166,16 +178,19 @@ a.menuitem {
 }
 
 #utilities {
-    width: 522px;
+    width: 560px;
     margin: 0 auto;
     opacity: 0;
     display: none;
-    overflow: hidden;
     padding: 10px 0 0 0;
 }
 
 #utilities .arrow {
     cursor: pointer;
+}
+
+#utilities-inner {
+    overflow: hidden;
 }
 
 #utilities #imgwrapper {
@@ -188,7 +203,7 @@ a.menuitem {
 }
 
 #utilities #imgwrapper .phonepair img {
-    width: 230px;
+    width: 250px;
     position: absolute;
 }
 
