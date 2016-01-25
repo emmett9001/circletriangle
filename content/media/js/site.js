@@ -80,6 +80,12 @@
         set_arrow_visibility();
     };
 
+    var build_collapse_log_callback = function() {
+        return function() {
+            collapse_audio_list(last_log_played[0], last_log_played[1]);
+        };
+    };
+
     var populate_logs = function (){
         for (var i = 0; i < audio_logs.length; i++) {
             var elem = document.createElement("div");
@@ -92,6 +98,8 @@
             audio_list.append(elem);
             $(elem).click(build_log_click_handler(audio_logs[i][0]));
         }
+        $("#dates").mouseenter(build_log_click_handler());
+        $("#dates").mouseleave(build_collapse_log_callback());
     };
 
     var utilities_list = $("#utilities #imgwrapper");
