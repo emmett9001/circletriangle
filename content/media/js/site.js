@@ -36,7 +36,9 @@
     var audio_list_expanded = false;
     var menu_expanded = false;
     var last_log_played;
-    var audio_playing;
+    var audio_playing,
+        album_playing;
+    var album_audio;
     var current_page;
     var current_utilities;
     var utility_slot;
@@ -45,12 +47,14 @@
         MENU_ITEM_HIDDEN_OPACITY = 0,
         UTILITY_WIDTH = "230px";
 
-    var build_log_click_handler = function(datestamp) {
+    var build_log_click_handler = function(datestamp, allow_collapse) {
         return function(event) {
             if (audio_list_expanded) {
-                collapse_audio_list(event.target, datestamp);
-                var audio = play_log(datestamp);
-                last_log_played = [event.target, datestamp, audio];
+                if (allow_collapse) {
+                    collapse_audio_list(event.target, datestamp);
+                    var audio = play_log(datestamp);
+                    last_log_played = [event.target, datestamp, audio];
+                }
             } else {
                 expand_audio_list();
                 collapse_menu();
@@ -98,8 +102,8 @@
             audio_list.append(elem);
             $(elem).click(build_log_click_handler(audio_logs[i][0]));
         }
-        $("#dates").mouseenter(build_log_click_handler());
-        $("#dates").mouseleave(build_collapse_log_callback());
+        $("#logwrapper").mouseenter(build_log_click_handler(undefined, false));
+        $("#menusouter").mouseleave(build_collapse_log_callback());
     };
 
     var utilities_list = $("#utilities #imgwrapper");
@@ -278,6 +282,19 @@
         hide_pages(undefined, function(){});
     };
 
+    var play_album = function() {
+        if (audio_playing) {
+            last_log_played[2].pause();
+        }
+        album_audio = new Audio();
+    };
+
+    var pause_album = function() {
+        if (album_playing) {
+            album_audio.pause();
+        }
+    };
+
     audio_list.scroll(function() {
         if (!audio_list_expanded) {
             return;
@@ -288,6 +305,7 @@
     $("#pause").click(function() {
         if (audio_playing) {
             last_log_played[2].pause();
+            pause_album();
             $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_MUTED.png') }}");
         } else {
             last_log_played[2].play();
@@ -317,6 +335,12 @@
     $(".menuitem").mouseenter(function() {
         if (!menu_expanded) {
             expand_menu();
+        }
+    });
+
+    $("img.playalbum").click(function() {
+        if (!album_playing) {
+            play_album();
         }
     });
 

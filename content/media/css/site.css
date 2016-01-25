@@ -50,24 +50,37 @@ html {
     min-height: 100%;
 }
 
+#menusouter {
+    float: right;
+    width: 600px;
+}
+
 #menuswrapper {
     float: right;
     margin: 0 50px 0 0;
     text-align: right;
-    width: 380px;
+    width: 260px;
     color: #9acaff;
     text-transform: uppercase;
     font-size: 38pt;
+    display: block;
 }
 
-#menuswrapper #dateslabel {
+#menusouter #dateslabel {
     display: inline-block;
     margin: 38px 10px 0 0;
     opacity: 0;
+    width: 278px;
+    line-height: 59px;
+    text-align: right;
 }
 
-#menuswrapper #dateslabel img {
+#menusouter #dateslabel img {
     height: 32px;
+}
+
+#menusouter #dateslabel img.playalbum {
+    cursor: pointer;
 }
 
 #logwrapper {
@@ -130,6 +143,7 @@ html {
 #logo {
     cursor: pointer;
     width: 207px;
+    float: right;
 }
 
 #pause {

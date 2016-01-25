@@ -53,31 +53,34 @@
     {% block content %}
         <div id="container">
             <img id="pause" src="{{ media_url('images/MUTE_SYMBOL.png') }}" />
-            <div id="menuswrapper">
+            <div id="menusouter">
                 <div id="dateslabel">
                     <img src="{{ media_url('images/DATE.png') }}" />
+                    <img class="playalbum" src="{{ media_url('images/PLAY_ALBUM.png') }}" />
                 </div>
-                <div id="logwrapper">
-                    <div class="arrow flip">
-                        <img src="{{ media_url('images/triangle.png') }}" />
+                <div id="menuswrapper">
+                    <div id="logwrapper">
+                        <div class="arrow flip">
+                            <img src="{{ media_url('images/triangle.png') }}" />
+                        </div>
+                        <div id="dates"><div id="inner"></div></div>
+                        <div class="arrow">
+                            <img src="{{ media_url('images/triangle.png') }}" />
+                        </div>
                     </div>
-                    <div id="dates"><div id="inner"></div></div>
-                    <div class="arrow">
-                        <img src="{{ media_url('images/triangle.png') }}" />
-                    </div>
+                    <img id="logo" src="{{ media_url('images/CT.png') }}" />
+                    <div id="menuouter"><div id="menuwrapper">
+                        <a href="#" class="menuitem utilities"><img src="{{ media_url('images/UTILITIES.png') }}" /></a>
+                        <a href="#" class="menuitem album">
+                            <img src="{{ media_url('images/ALBUM.png') }}" />
+                        </a>
+                        <a href="#" class="menuitem soundcloud"><img src="{{ media_url('images/SOUNDCLOUD.png') }}" /></a>
+                        <a href="https://www.instagram.com/londonoconnor/"
+                        class="menuitem instagram" target="_blank"><img src="{{ media_url('images/INSTAGRAM.png') }}" /></a>
+                        <a href="https://www.twitter.com/londonoconnor/"
+                        class="menuitem twitter" target="_blank"><img src="{{ media_url('images/TWITTER.png') }}" /></a>
+                    </div></div>
                 </div>
-                <img id="logo" src="{{ media_url('images/CT.png') }}" />
-                <div id="menuouter"><div id="menuwrapper">
-                    <a href="#" class="menuitem utilities"><img src="{{ media_url('images/UTILITIES.png') }}" /></a>
-                    <a href="#" class="menuitem album">
-                        <img src="{{ media_url('images/ALBUM.png') }}" />
-                    </a>
-                    <a href="#" class="menuitem soundcloud"><img src="{{ media_url('images/SOUNDCLOUD.png') }}" /></a>
-                    <a href="https://www.instagram.com/londonoconnor/"
-                       class="menuitem instagram" target="_blank"><img src="{{ media_url('images/INSTAGRAM.png') }}" /></a>
-                    <a href="https://www.twitter.com/londonoconnor/"
-                       class="menuitem twitter" target="_blank"><img src="{{ media_url('images/TWITTER.png') }}" /></a>
-                </div></div>
             </div>
             <div id="contentwrapper">
                 <div id="album">
