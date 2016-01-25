@@ -85,6 +85,10 @@
             var elem = document.createElement("div");
             elem.className = "date";
             elem.innerHTML = audio_logs[i][0];
+            if (i === 0) {
+                var today = new Date();
+                elem.innerHTML = (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear();
+            }
             audio_list.append(elem);
             $(elem).click(build_log_click_handler(audio_logs[i][0]));
         }
@@ -290,6 +294,12 @@
     $("#menuouter").mouseenter(function() {
         if (!menu_expanded) {
             expand_menu();
+        }
+    });
+
+    $("#menuouter").mouseleave(function() {
+        if (menu_expanded) {
+            build_page_click_handler(current_page)();
         }
     });
 
