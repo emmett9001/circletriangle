@@ -50,24 +50,24 @@ body{
     float: right;
     margin: 0 50px 0 0;
     text-align: right;
-    width: 350px;
+    width: 380px;
     color: #9acaff;
     text-transform: uppercase;
-    font-size: 34pt;
+    font-size: 38pt;
 }
 
 #menuswrapper #dateslabel {
     display: inline-block;
     margin: 38px 10px 0 0;
-    font-size: 25pt;
+    font-size: 34pt;
     opacity: 0;
 }
 
 #logwrapper {
     float: right;
-    width: 220px;
+    width: 250px;
     display: inline-block;
-    margin: 0 0 20px 0;
+    margin: 0 0 0 0;
 }
 
 #dates {
@@ -97,19 +97,20 @@ body{
 }
 
 .arrow img {
-    -ms-transform: translate(0, -17px);
-    -webkit-transform: translate(0, -17px);
-    transform: translate(0, -17px);
+    -ms-transform: translate(0, -27px);
+    -webkit-transform: translate(0, -27px);
+    transform: translate(0, -27px);
 }
 
 .arrow.flip img {
-    -ms-transform: rotate(180deg); /* IE 9 */
-    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-    transform: translate(0, -17px) rotate(180deg);
+    -ms-transform: translate(0, -30px) rotate(180deg); /* IE 9 */
+    -webkit-transform: translate(0, -30px) rotate(180deg); /* Chrome, Safari, Opera */
+    transform: translate(0, -30px) rotate(180deg);
 }
 
 #logo {
     cursor: pointer;
+    width: 207px;
 }
 
 #pause {
@@ -127,6 +128,8 @@ body{
     width: 100%;
     height: 0px;
     overflow: hidden;
+    line-height: 34px;
+    margin: 20px 0 0 0;
 }
 
 a.menuitem {
@@ -151,8 +154,8 @@ a.menuitem {
 #albumtext {
     text-align: left;
     text-transform: uppercase;
-    font-size: 20pt;
-    color: #5d9aeb;
+    font-size: 23pt;
+    color: #0066cc;
 }
 
 #soundcloud {

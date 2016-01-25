@@ -215,7 +215,7 @@
             audio_objects[key].pause();
         }
         var audio = new Audio('media/audio/' + filename);
-        audio.play();
+        //audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
         last_log_played = [undefined, datestamp, audio];
@@ -224,7 +224,8 @@
 
     var set_arrow_visibility = function() {
         var scrollAmount = audio_list.scrollTop() + audio_list.height();
-        if(scrollAmount == audio_list[0].scrollHeight) {
+        console.log(audio_list[0].scrollHeight);
+        if(scrollAmount === audio_list[0].scrollHeight - 15) {
             $("#logwrapper .arrow").css("visibility", "hidden");
             $("#logwrapper .arrow.flip").css("visibility", "visible");
         } else if(scrollAmount == audio_list.height()) {
