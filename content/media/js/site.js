@@ -232,6 +232,7 @@
         //audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
+        $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
         last_log_played = [undefined, datestamp, audio];
         return audio;
     };
