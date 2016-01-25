@@ -229,7 +229,7 @@
             audio_objects[key].pause();
         }
         var audio = new Audio('media/audio/' + filename);
-        audio.play();
+        //audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
         last_log_played = [undefined, datestamp, audio];
@@ -287,8 +287,10 @@
     $("#pause").click(function() {
         if (audio_playing) {
             last_log_played[2].pause();
+            $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_MUTED.png') }}");
         } else {
             last_log_played[2].play();
+            $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
         }
         audio_playing = !audio_playing;
     });
