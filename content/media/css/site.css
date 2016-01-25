@@ -150,8 +150,19 @@ html {
 }
 
 a.menuitem {
-    color: #ffffff;
-    font-size: 25pt;
+    display: block;
+    height: 42px;
+}
+
+a.menuitem img {
+    height: 24px;
+}
+
+a.menuitem.album img {
+    height: 32px;
+    transform: translate(0, 7px);
+    -webkit-transform: translate(0, 7px);
+    -ms-transform: translate(0, 7px);
 }
 
 #contentwrapper {
