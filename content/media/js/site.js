@@ -146,6 +146,8 @@
                         ANIMATION_TIMEOUT);
                 }
             }
+        } else {
+            setTimeout(function() { show_utility(index, initial_load); }, 400);
         }
         $("#utilities .arrow").css("visibility", "visible");
         if (index === 0) {
