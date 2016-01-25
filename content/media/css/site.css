@@ -132,6 +132,7 @@ html {
 #pause {
     margin: 10px 0 0 10px;
     cursor: pointer;
+    width: 20px;
 }
 
 #menuouter {
@@ -195,6 +196,7 @@ a.menuitem {
 
 #utilities-inner {
     overflow: hidden;
+    padding: 75px 0 0 0;
 }
 
 #utilities #imgwrapper {
