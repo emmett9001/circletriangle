@@ -63,8 +63,11 @@ html {
 #menuswrapper #dateslabel {
     display: inline-block;
     margin: 38px 10px 0 0;
-    font-size: 34pt;
     opacity: 0;
+}
+
+#menuswrapper #dateslabel img {
+    height: 32px;
 }
 
 #logwrapper {
