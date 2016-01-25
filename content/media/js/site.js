@@ -98,7 +98,6 @@
                 loaded_utilities[idx] = {};
             }
             loaded_utilities[idx][pos] = e.target;
-            $(e.target).css("display", "none");
             if (typeof callback !== "undefined") {
                 callback();
             }
@@ -113,7 +112,7 @@
         };
     };
 
-    var show_utility = function(index) {
+    var show_utility = function(index, initial_load) {
         var next_start_top = "900px", cur_target_top = "-900px";
         if (typeof current_utilities !== "undefined") {
             if (current_utilities[0] > index) {
@@ -121,11 +120,12 @@
                 cur_target_top = "900px";
             }
             for (var i = 1; i <= 2; i++) {
-                if (typeof current_utilities[i] !== "undefined") {
+                if (typeof current_utilities[i] !== "undefined" &&
+                    typeof initial_load === "undefined")
+                {
                     $(current_utilities[i]).animate({top: cur_target_top, "opacity": 0},
                         ANIMATION_TIMEOUT,
                         build_reset_utility_animation_callback(current_utilities[i]));
-                    $(current_utilities[i]).animate({"opacity": 0}, 100);
                 }
             }
         }
@@ -166,18 +166,20 @@
         }
         var src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][0];
         var utility = $('<img src="' + src +'" class="left">');
-        utility.load(add_image(phoneslot, index, 0));
+        utility.load(add_image(phoneslot, index, 0, callback));
+        $(utility).css("display", "none");
         if (phone_backgrounds[index].length > 1) {
             src = "{{ media_url('images/phones/') }}" + phone_backgrounds[index][1];
             var utility2 = $('<img src="' + src +'" class="right" >');
             utility2.load(add_image(phoneslot, index, 1, callback));
+            $(utility2).css("display", "none");
         }
     };
 
     var populate_utilities = function() {
         phoneslot = document.createElement("div");
         phoneslot.className = "phonepair";
-        load_utility(0, function() {show_utility(0);});
+        load_utility(0, function() {show_utility(0, true);});
         utilities_list.append(phoneslot);
     };
 
