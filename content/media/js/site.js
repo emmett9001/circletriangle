@@ -36,13 +36,14 @@
     var audio_list_expanded = false;
     var menu_expanded = false;
     var last_log_played;
-    var audio_playing,
-        album_playing;
+    var audio_playing;
+    var running_audio;
     var album_audio;
     var current_page;
     var current_utilities;
     var utility_slot;
     var loaded_utilities = {};
+    var soundcloud_player;
     var ANIMATION_TIMEOUT = 500,
         MENU_ITEM_HIDDEN_OPACITY = 0,
         UTILITY_WIDTH = "230px";
@@ -50,7 +51,7 @@
     var build_log_click_handler = function(datestamp, allow_collapse) {
         return function(event) {
             if (audio_list_expanded) {
-                if (allow_collapse) {
+                if (allow_collapse || typeof allow_collapse === "undefined") {
                     collapse_audio_list(event.target, datestamp);
                     var audio = play_log(datestamp);
                     last_log_played = [event.target, datestamp, audio];
@@ -233,9 +234,10 @@
             audio_objects[key].pause();
         }
         var audio = new Audio('media/audio/' + filename);
-        //audio.play();
+        audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
+        running_audio = audio;
         $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
         last_log_played = [undefined, datestamp, audio];
         return audio;
@@ -243,7 +245,6 @@
 
     var set_arrow_visibility = function() {
         var scrollAmount = audio_list.scrollTop() + audio_list.height();
-        console.log(audio_list[0].scrollHeight);
         if(scrollAmount === audio_list[0].scrollHeight - 15) {
             $("#logwrapper .arrow").css("visibility", "hidden");
             $("#logwrapper .arrow.flip").css("visibility", "visible");
@@ -286,13 +287,10 @@
         if (audio_playing) {
             last_log_played[2].pause();
         }
-        album_audio = new Audio();
-    };
-
-    var pause_album = function() {
-        if (album_playing) {
-            album_audio.pause();
-        }
+        audio_playing = true;
+        running_audio = soundcloud_player;
+        soundcloud_player.play();
+        $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
     };
 
     audio_list.scroll(function() {
@@ -304,11 +302,10 @@
 
     $("#pause").click(function() {
         if (audio_playing) {
-            last_log_played[2].pause();
-            pause_album();
+            running_audio.pause();
             $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_MUTED.png') }}");
         } else {
-            last_log_played[2].play();
+            running_audio.play();
             $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
         }
         audio_playing = !audio_playing;
@@ -339,9 +336,7 @@
     });
 
     $("img.playalbum").click(function() {
-        if (!album_playing) {
-            play_album();
-        }
+        play_album();
     });
 
     $("#logo").click(function() {
@@ -399,5 +394,6 @@
         populate_logs();
         populate_utilities();
         play_log();
+        soundcloud_player = SC.Widget(document.querySelector("iframe"));
     });
 })();
