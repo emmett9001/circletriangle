@@ -37,20 +37,25 @@
     var menu_expanded = false;
     var last_log_played;
     var audio_playing;
+    var running_audio;
+    var album_audio;
     var current_page;
     var current_utilities;
     var utility_slot;
     var loaded_utilities = {};
+    var soundcloud_player;
     var ANIMATION_TIMEOUT = 500,
         MENU_ITEM_HIDDEN_OPACITY = 0,
         UTILITY_WIDTH = "230px";
 
-    var build_log_click_handler = function(datestamp) {
+    var build_log_click_handler = function(datestamp, allow_collapse) {
         return function(event) {
             if (audio_list_expanded) {
-                collapse_audio_list(event.target, datestamp);
-                var audio = play_log(datestamp);
-                last_log_played = [event.target, datestamp, audio];
+                if (allow_collapse || typeof allow_collapse === "undefined") {
+                    collapse_audio_list(event.target, datestamp);
+                    var audio = play_log(datestamp);
+                    last_log_played = [event.target, datestamp, audio];
+                }
             } else {
                 expand_audio_list();
                 collapse_menu();
@@ -98,8 +103,8 @@
             audio_list.append(elem);
             $(elem).click(build_log_click_handler(audio_logs[i][0]));
         }
-        $("#dates").mouseenter(build_log_click_handler());
-        $("#dates").mouseleave(build_collapse_log_callback());
+        $("#logwrapper").mouseenter(build_log_click_handler(undefined, false));
+        $("#menusouter").mouseleave(build_collapse_log_callback());
     };
 
     var utilities_list = $("#utilities #imgwrapper");
@@ -232,6 +237,7 @@
         audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
+        running_audio = audio;
         $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
         last_log_played = [undefined, datestamp, audio];
         return audio;
@@ -239,7 +245,6 @@
 
     var set_arrow_visibility = function() {
         var scrollAmount = audio_list.scrollTop() + audio_list.height();
-        console.log(audio_list[0].scrollHeight);
         if(scrollAmount === audio_list[0].scrollHeight - 15) {
             $("#logwrapper .arrow").css("visibility", "hidden");
             $("#logwrapper .arrow.flip").css("visibility", "visible");
@@ -278,6 +283,16 @@
         hide_pages(undefined, function(){});
     };
 
+    var play_album = function() {
+        if (audio_playing) {
+            last_log_played[2].pause();
+        }
+        audio_playing = true;
+        running_audio = soundcloud_player;
+        soundcloud_player.play();
+        $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
+    };
+
     audio_list.scroll(function() {
         if (!audio_list_expanded) {
             return;
@@ -287,10 +302,10 @@
 
     $("#pause").click(function() {
         if (audio_playing) {
-            last_log_played[2].pause();
+            running_audio.pause();
             $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_MUTED.png') }}");
         } else {
-            last_log_played[2].play();
+            running_audio.play();
             $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
         }
         audio_playing = !audio_playing;
@@ -318,6 +333,10 @@
         if (!menu_expanded) {
             expand_menu();
         }
+    });
+
+    $("img.playalbum").click(function() {
+        play_album();
     });
 
     $("#logo").click(function() {
@@ -375,5 +394,6 @@
         populate_logs();
         populate_utilities();
         play_log();
+        soundcloud_player = SC.Widget(document.querySelector("iframe"));
     });
 })();
