@@ -233,6 +233,9 @@
         for (var key in audio_objects) {
             audio_objects[key].pause();
         }
+        if (typeof soundcloud_player !== "undefined") {
+            soundcloud_player.pause();
+        }
         var audio = new Audio('media/audio/' + filename);
         audio.play();
         audio_objects[datestamp] = audio;
@@ -289,6 +292,7 @@
         }
         audio_playing = true;
         running_audio = soundcloud_player;
+        soundcloud_player.seekTo(0);
         soundcloud_player.play();
         $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
     };
@@ -337,6 +341,7 @@
 
     $("img.playalbum").click(function() {
         play_album();
+        collapse_audio_list(last_log_played[0], last_log_played[1]);
     });
 
     $("#logo").click(function() {
