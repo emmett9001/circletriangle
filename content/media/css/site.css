@@ -239,6 +239,12 @@ a.menuitem.album img {
     text-align: right;
 }
 
+@media (max-width: 1140px) {
+    #contact {
+        text-align: left;
+    }
+}
+
 #utilities {
     width: 560px;
     margin: 0 auto;
