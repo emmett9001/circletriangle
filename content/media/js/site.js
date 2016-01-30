@@ -1,12 +1,12 @@
 (function(){
     var audio_logs = [
-        ["1/22/2016", "TEST_1_22_16.mp3", "{{ media_url('images/logs/Log_1_24_16.png') }}"],
-        ["12/2/2015", "TEST_12_2_15.mp3",  "{{ media_url('images/logs/Log_12_2_15.png') }}"],
-        ["12/1/2015", "TEST_12_1_15.mp3", "{{ media_url('images/logs/Log_12_1_15.png') }}"],
-        ["11/28/2015", "TEST_11_28_15.mp3", "{{ media_url('images/logs/Log_11_28_15.png') }}"],
-        ["11/27/2015", "TEST_11_27_15.mp3", "{{ media_url('images/logs/Log_11_28_15.png') }}"],
-        ["10/26/2015", "TEST_10_26_15.mp3", "{{ media_url('images/logs/Log_10_26_15.png') }}"],
-        ["8/5/2015", "TEST_8_5_15.mp3", "{{ media_url('images/logs/Log_8_5_15.png') }}"]
+        ["1/22/2016", "CL_1_22_2016.mp3", "{{ media_url('images/logs/Log_1_24_16.png') }}"],
+        ["12/2/2015", "CL_12_2_2015.mp3",  "{{ media_url('images/logs/Log_12_2_15.png') }}"],
+        ["12/1/2015", "CL_12_1_2015.mp3", "{{ media_url('images/logs/Log_12_1_15.png') }}"],
+        ["11/28/2015", "CL_11_28_2015.mp3", "{{ media_url('images/logs/Log_11_28_15.png') }}"],
+        ["10/26/2015", "CL_10_26_2015.mp3", "{{ media_url('images/logs/Log_10_26_15.png') }}"],
+        ["1/27/2015", "CL_1_27_15.mp3", "{{ media_url('images/logs/Log_10_26_15.png') }}"],
+        ["1/10/2015", "CL_1_10_2015.mp3", "{{ media_url('images/logs/CL_1_10_2015.png') }}"]
     ];
     var phone_backgrounds = [
         ["0A_LOCK_REF.png", "0B_LOCK_REF.png"],
@@ -239,14 +239,18 @@
         }
 
         $("#coordinates").css("display", "block");
-        $("#coordinates img").attr("src", coordinates);
+        $("#coordinates").animate({"opacity": 0}, ANIMATION_TIMEOUT,
+            function() {
+                $("#coordinates img").attr("src", coordinates);
+                $("#coordinates").animate({"opacity": 1}, ANIMATION_TIMEOUT);
+            });
 
         var audio = new Audio('media/audio/' + filename);
         audio.play();
         audio_objects[datestamp] = audio;
         audio_playing = true;
         running_audio = audio;
-        $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
+        $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_Blue.png') }}");
         last_log_played = [undefined, datestamp, audio];
         return audio;
     };
@@ -299,7 +303,7 @@
         running_audio = soundcloud_player;
         soundcloud_player.seekTo(0);
         soundcloud_player.play();
-        $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
+        $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_Blue.png') }}");
     };
 
     audio_list.scroll(function() {
@@ -312,10 +316,10 @@
     $("#pause").click(function() {
         if (audio_playing) {
             running_audio.pause();
-            $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_MUTED.png') }}");
+            $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_MUTED_blue.png') }}");
         } else {
             running_audio.play();
-            $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL.png') }}");
+            $("#pause").attr("src", "{{ media_url('images/MUTE_SYMBOL_Blue.png') }}");
         }
         audio_playing = !audio_playing;
     });
@@ -360,7 +364,7 @@
         }
     });
 
-    var pages = ["album", "soundcloud", "utilities"];
+    var pages = ["album", "soundcloud", "utilities", "contact"];
 
     var hide_pages = function(pagename, callback) {
         var hide_page = function(elem) {
