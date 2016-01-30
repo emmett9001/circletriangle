@@ -265,7 +265,7 @@
         if (hour > 18) {
             $("body").css("background-image", "url('media/images/LONDON_OCONNOR_2016_SITE_NIGHT.png')");
         } else {
-            $("body").css("background-image", "url('media/images/LONDON_OCONNOR_2016_SITE_DAY_GRADIENT.jpg')");
+            $("body").css("background-image", "url('media/images/RED_background.png')");
         }
     };
 
