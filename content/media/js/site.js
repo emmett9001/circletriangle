@@ -1,12 +1,12 @@
 (function(){
     var audio_logs = [
-        ["1/22/2016", "TEST_1_22_16.mp3"],
-        ["12/2/2015", "TEST_12_2_15.mp3"],
-        ["12/1/2015", "TEST_12_1_15.mp3"],
-        ["11/28/2015", "TEST_11_28_15.mp3"],
-        ["11/27/2015", "TEST_11_27_15.mp3"],
-        ["10/26/2015", "TEST_10_26_15.mp3"],
-        ["8/5/2015", "TEST_8_5_15.mp3"]
+        ["1/22/2016", "TEST_1_22_16.mp3", "{{ media_url('images/logs/Log_1_24_16.png') }}"],
+        ["12/2/2015", "TEST_12_2_15.mp3",  "{{ media_url('images/logs/Log_12_2_15.png') }}"],
+        ["12/1/2015", "TEST_12_1_15.mp3", "{{ media_url('images/logs/Log_12_1_15.png') }}"],
+        ["11/28/2015", "TEST_11_28_15.mp3", "{{ media_url('images/logs/Log_11_28_15.png') }}"],
+        ["11/27/2015", "TEST_11_27_15.mp3", "{{ media_url('images/logs/Log_11_28_15.png') }}"],
+        ["10/26/2015", "TEST_10_26_15.mp3", "{{ media_url('images/logs/Log_10_26_15.png') }}"],
+        ["8/5/2015", "TEST_8_5_15.mp3", "{{ media_url('images/logs/Log_8_5_15.png') }}"]
     ];
     var phone_backgrounds = [
         ["0A_LOCK_REF.png", "0B_LOCK_REF.png"],
@@ -230,12 +230,17 @@
         }
         entry = get_log_by_date(datestamp)[1];
         filename = entry[1];
+        coordinates = entry[2];
         for (var key in audio_objects) {
             audio_objects[key].pause();
         }
         if (typeof soundcloud_player !== "undefined") {
             soundcloud_player.pause();
         }
+
+        $("#coordinates").css("display", "block");
+        $("#coordinates img").attr("src", coordinates);
+
         var audio = new Audio('media/audio/' + filename);
         audio.play();
         audio_objects[datestamp] = audio;
@@ -375,6 +380,17 @@
             ANIMATION_TIMEOUT);
         $(".menuitem.twitter").animate({opacity: MENU_ITEM_HIDDEN_OPACITY},
             ANIMATION_TIMEOUT);
+        if (typeof pagename !== "undefined") {
+            $("#coordinates").animate({"opacity": 0}, ANIMATION_TIMEOUT,
+                function() {
+                    $("#coordinates").css("display", "none");
+                });
+        } else {
+            setTimeout(function() {
+                $("#coordinates").css("display", "block");
+                $("#coordinates").animate({"opacity": 1}, ANIMATION_TIMEOUT);
+            }, ANIMATION_TIMEOUT);
+        }
     };
 
     var build_page_click_handler = function(pagename) {

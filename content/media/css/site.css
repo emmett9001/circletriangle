@@ -51,7 +51,9 @@ html {
 }
 
 #menusouter {
-    float: right;
+    position: absolute;
+    right: 0%;
+    top: 0%;
     width: 600px;
 }
 
@@ -212,6 +214,17 @@ a.menuitem.album img {
     margin: 0 auto;
     opacity: 0;
     display: none;
+}
+
+#coordinates {
+    width: 100%;
+    padding: 217px 0 0 0;
+    display: none;
+}
+
+#coordinates img {
+    height: 17px;
+    margin: 0 auto;
 }
 
 #utilities {
